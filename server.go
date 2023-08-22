@@ -60,6 +60,14 @@ func main() {
 		fmt.Printf("id: %s; page: %s; name: %s; message: %s", id, page, name, message)
 	})
 
+	//Map as queryString or postform parameters
+	r.POST("map_post", func(context *gin.Context) {
+		ids := context.QueryMap("ids")
+		names := context.PostFormMap("name")
+
+		fmt.Printf("ids: %v; names: %v", ids, names)
+	})
+
 	//handle route group
 	v1 := r.Group("/v1")
 	{
@@ -71,15 +79,7 @@ func main() {
 			//handle request for version 1 of users route
 		})
 	}
+
 	r.Run()
-	//Advanced routing
-	// HTTP redirects
-
-	/*router := gin.Default()
-	r.GET("/redirect", func(context *gin.Context) {
-		context.Redirect(http.StatusMovedPermanently, "https://www.google.com/")
-	})
-
-	r.Run(":8080")*/
 
 }
